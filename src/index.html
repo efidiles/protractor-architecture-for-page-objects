@@ -1,0 +1,46 @@
+<html>
+
+  <head>
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+      crossorigin="anonymous">
+
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+      integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+      crossorigin="anonymous">
+
+      <style>
+        a.preview {
+          display: block;
+          min-width: 20px;
+          min-height: 20px;
+        }
+      </style>
+  </head>
+
+  <body ng-app="app">
+    <div class="container">
+      <ui-view></ui-view>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap-tpls.min.js"></script>
+    <script src="app.js"></script>
+    <script type="text/ng-template" id="product-preview.html">
+      <div class="modal-header">
+          <h3 class="modal-title">Preview of {{product.name}}</h3>
+        </div>
+        <div class="modal-body text-center">
+          <img ng-src="{{product.image}}" alt="Preview of {{product.name}}">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="close()">Close</button>
+        </div>
+    </script>
+  </body>
+
+</html>

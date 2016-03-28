@@ -1,0 +1,32 @@
+{
+  "name": "protractor-element-click-and-navigate",
+  "version": "1.0.0",
+  "description": "Add a clickAndNavigate method to protractor element to use with buttons performing route changes",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp webserver",
+    "test": "npm --silent run test:e2e",
+    "test:e2e": "gulp e2e",
+    "test:e2e:webdriver": "webdriver-manager start",
+    "test:e2e:protractor": "protractor protractor.config.js",
+    "postinstall": "echo 'Updating webdriver...' && webdriver-manager update",
+    "kill": "(sudo killall node; sudo killall java) || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efidiles/protractor-element-click-and-navigate.git"
+  },
+  "author": "Eduard Fidiles",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/efidiles/protractor-element-click-and-navigate/issues"
+  },
+  "homepage": "https://github.com/efidiles/protractor-element-click-and-navigate#readme",
+  "devDependencies": {
+    "express": "^4.13.4",
+    "gulp": "^3.9.1",
+    "gulp-util": "^3.0.7",
+    "protractor": "^3.2.2",
+    "run-sequence": "^1.1.5"
+  }
+}
