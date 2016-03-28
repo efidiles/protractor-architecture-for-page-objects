@@ -2,18 +2,20 @@
 
 Writing your integration tests using page objects offers the benefit of a high level API that can be used by anyone to write tests without knowing too many technical details.
 
-The following architecture assures that those persons avoid common mistakes and headaches caused by the various factors involved in write e2e tests: Selenium, Angular, Protractor, Promises etc.)  
+The following architecture assures that those persons avoid common mistakes and headaches caused by the various factors involved in writing e2e tests: Selenium, Angular, Protractor, Promises etc.)  
 
 The convention is the following:
 - Integration tests are written by making use of the API exposed by page objects.
 - Instances of page objects are always created in `beforeAll` / `beforeEach` blocks.
-- in the following `it` block it's safe to interact with all the properties and methods of the page object.
+- in the following `it` blocks it's safe to interact with all the properties and methods of the page objects.
 
-The navigation to the page we need to inspect is done inside the constructor of the page objects - therefore the navigation to the page that we need to start with will also happens in the `before` block.
+The navigation to the page we need to inspect is done inside the constructor of the page objects - therefore the navigation to the page that we need to start with will also happen in the `before` block.
 
 A typical e2e test will look like this:
 
 ```js
+'use strict';
+
 var PreviewProductPage = require('../page-object/preview-product');
 
 describe('Preview product', function () {
@@ -87,15 +89,15 @@ function _getCloseButton() {
 }
 ```
 
-Mainly two things are important:
-1. Do the navigation in the constructor (`PreviewProductPage`).
+Mainly two things are important:  
+1. Do the navigation in the constructor (`PreviewProductPage`).  
 2. Set the prototype with a new instance of `PageObject` (`PreviewProductPage.prototype`).
 
-In the constructor we have two marker: `startNavigation` and `completeNavigation`. This will help to determine when a page has finishes its initial navigation.
+In the constructor we have two markers: `startNavigation` and `completeNavigation`. This will help to determine when a page has finished its initial navigation.
 We call `startNavigation` followed by any other steps involved to get to a page / modal and then we call `completeNavigation` to mark the end of the navigation.  
-The reason for these start / complete markers is to help the `PageObject` to defer all methods on the page object to execute after the navigation completes and to throw explicit error messages if properties are accessed before the navigation has completed.
+The reason for these start / complete markers is to help the `PageObject` to defer all methods on the page object to execute after the navigation completes and to throw explicit error messages if properties on the page object are accessed before the navigation has completed.
 
-The `prototype` is set to a new instance of a `PageObject` to which we pass two objects: one with properties and one with methods that we want accesible in the page object currently built. The reason why they are passed to the `PageObject` is that inside the `PageObject` these methods will be wrapped inside other functions that will perform the deferring / throwing operation if needed.
+The `prototype` is set to a new instance of a `PageObject` to which we pass two objects: one with properties and one with methods that we want accesible in the page object currently built. The reason why they are passed to the `PageObject` is that inside the `PageObject` these methods will be wrapped inside other functions that will perform the deferring / throwing operations if needed.
 
 That's all a developer has to do.
 
@@ -162,7 +164,8 @@ function _completeNavigation() {
 function _expectNavigationComplete(next) {
     return function () {
         if (!this.$navigationComplete) {
-            throw 'Navigation is not complete! Make sure completeNavigation is called before querying the page.';
+            throw 'Navigation is not complete! Make sure ' +
+              'completeNavigation is called before querying the page.';
         }
 
         return next.apply(this, arguments);
@@ -181,8 +184,31 @@ function _waitForNavigation(next) {
 }
 ```
 
+## Running the example:
+
+Clone the repo:
+`git clone git@github.com:efidiles/protractor-architecture-for-page-objects.git .`
+
+Install the packages:  
+`npm install`
+
+To run the tests:  
+`npm test`
+
+To run the example in your browser:  
+`npm start`
+
+then open in browser:   
+`http://localhost:8085`
+
+___
+**This has only been tested on Ubuntu.**
+
+___
+
 **TIP:** Having an image with `ng-src` inside a link causes the link not to be visible for clicking (because the image is rendered in the next event loop and until then the link has dimensions 0 - no content).  
 The css below is one solution to overcome this. Basically we give minimum dimensions for preview links.
+
 ```css
 a.preview {
   display: block;
