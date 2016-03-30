@@ -7,8 +7,10 @@ var productsListingUrl = '#/products-listing';
 var PreviewProductPage = function (id) {
   id = id.toString();
 
-  this.startNavigation(productsListingUrl)
+  this.startNavigation()
+    .then(browser.get.bind(browser, productsListingUrl))
     .then(_openProductEditModal.bind(this, id))
+    // .then(_someOtherAction)
     .then(this.completeNavigation.bind(this));
     // or with an arrow function: .then(() => (this.completeNavigation()));
 };

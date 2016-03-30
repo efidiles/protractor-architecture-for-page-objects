@@ -5,7 +5,9 @@ var PageObject = require('./page-object');
 var productsListingUrl = '#/products-listing';
 
 var ProductListingPage = function () {
-  this.startNavigation(productsListingUrl)
+  this.startNavigation()
+    .then(browser.get.bind(browser, productsListingUrl))
+    // .then(_someOtherAction)
     .then(this.completeNavigation.bind(this));
 };
 
